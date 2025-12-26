@@ -5,22 +5,12 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
-  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  FilterTab,
-  Avatar,
-  PostCard,
-  PollCard,
-  ToggleSwitch,
-  FloatingActionButton,
-  Title,
-  CommentsBottomSheet,
-} from "@/components/ui";
+import { Avatar, PostCard, FloatingActionButton, Icon } from "@/components/ui";
 import colors from "@/constants/colors";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { icons } from "@/constants/icon";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -38,261 +28,133 @@ export default function HomeScreen() {
   ];
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={styles.container} edges={["top"]}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <View style={styles.avatarContainer}>
-              <Avatar
-                source={{ uri: "https://i.pravatar.cc/150?img=12" }}
-                name="Alex"
-                size={48}
-              />
-              <View style={styles.onlineIndicator} />
-            </View>
-            <View style={styles.greetingContainer}>
-              <Text style={styles.greeting}>Good Morning, Alex</Text>
-              <Text style={styles.userInfo}>Computer Science • Year 2</Text>
-            </View>
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <View style={styles.avatarContainer}>
+            <Avatar
+              source={{ uri: "https://i.pravatar.cc/150?img=12" }}
+              name="Alex"
+              size={48}
+            />
+            <View style={styles.onlineIndicator} />
           </View>
-          <View style={styles.headerRight}>
-            <TouchableOpacity style={styles.iconButton} activeOpacity={0.7}>
-              <Ionicons
-                name="search-outline"
+          <View style={styles.greetingContainer}>
+            <Text style={styles.greeting}>Lê Hải Thọ</Text>
+            <Text style={styles.userInfo}>Khoa Công nghệ thông tin</Text>
+          </View>
+        </View>
+        <View style={styles.headerRight}>
+          <TouchableOpacity style={styles.iconButton} activeOpacity={0.7}>
+            <Icon
+              name={icons.search.inactive.name}
+              set={icons.search.inactive.set}
+              size={24}
+              color={colors.icon.primary}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton} activeOpacity={0.7}>
+            <View style={styles.badgeContainer}>
+              <Icon
+                name={icons.notification.inactive.name}
+                set={icons.notification.inactive.set}
                 size={24}
-                color={colors.text.primary}
+                color={colors.icon.primary}
               />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton} activeOpacity={0.7}>
-              <View style={styles.badgeContainer}>
-                <Ionicons
-                  name="notifications-outline"
-                  size={24}
-                  color={colors.text.primary}
-                />
-                <View style={styles.notificationBadge} />
-              </View>
-            </TouchableOpacity>
-          </View>
+              <View style={styles.notificationBadge} />
+            </View>
+          </TouchableOpacity>
         </View>
+      </View>
 
-        {/* Filter Tabs */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.filtersContainer}
-          style={styles.filtersScroll}
-        >
-          {filters.map((filter) => (
-            <FilterTab
-              key={filter.id}
-              label={filter.label}
-              selected={selectedFilter === filter.id}
-              onPress={() => setSelectedFilter(filter.id)}
-            />
-          ))}
-        </ScrollView>
+      {/* Feed Content */}
+      <ScrollView
+        style={styles.feedScroll}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.feedContent}
+      >
+        {/* Pinned Announcement */}
+        <PostCard
+          author={{
+            name: "Registrar's Office",
+          }}
+          timestamp="2h ago"
+          content="The official schedule for Spring 2024 final exams is now available. Please check your student portal for details."
+          // pinned={true}
+          // pinnedLabel="PINNED ANNOUNCEMENT"
+          image={{
+            uri: "https://khoinguonsangtao.vn/wp-content/uploads/2021/08/tai-hinh-anh-dep-ve-thien-nhien.jpg",
+          }}
+          likes={0}
+          comments={0}
+        />
+        <View style={styles.divider} />
 
-        {/* Feed Content */}
-        <ScrollView
-          style={styles.feedScroll}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.feedContent}
-        >
-          {/* Feed Header */}
-          <View style={styles.feedHeader}>
-            <Title variant="h2" weight="bold" style={styles.feedTitle}>
-              Your Feed
-            </Title>
-            <ToggleSwitch
-              options={["Newest", "Popular"]}
-              selected={feedSort}
-              onToggle={setFeedSort}
-            />
-          </View>
+        {/* Club Event - Photography Club */}
+        <PostCard
+          author={{
+            name: "Photography Club",
+            icon: "camera-outline" as keyof typeof Ionicons.glyphMap,
+            backgroundColor: colors.text.primary,
+            iconColor: colors.text.white,
+          }}
+          timestamp="3h ago"
+          content="Golden hour meet-up this Friday! ☀️ Bring your cameras and let's capture the sunset at the quad. We will be experimenting with long exposure shots near the fountain. Beginners are super welcome! 📷"
+          image={{
+            uri: "https://khoinguonsangtao.vn/wp-content/uploads/2021/08/tai-hinh-anh-dep-ve-thien-nhien.jpg",
+          }}
+          likes={48}
+          comments={15}
+          onCommentPress={() => {
+            console.log("comment press");
+          }}
+        />
+        <View style={styles.divider} />
+        <PostCard
+          author={{
+            name: "Photography Club",
+            icon: "camera-outline" as keyof typeof Ionicons.glyphMap,
+            backgroundColor: colors.text.primary,
+            iconColor: colors.text.white,
+          }}
+          timestamp="3h ago"
+          content="Golden hour meet-up this Friday! ☀️ Bring your cameras and let's capture the sunset at the quad. We will be experimenting with long exposure shots near the fountain. Beginners are super welcome! 📷"
+          image={{
+            uri: "https://khoinguonsangtao.vn/wp-content/uploads/2021/08/tai-hinh-anh-dep-ve-thien-nhien.jpg",
+          }}
+          likes={48}
+          comments={15}
+          onCommentPress={() => {
+            console.log("comment press");
+          }}
+        />
+      </ScrollView>
 
-          {/* Pinned Announcement */}
-          <PostCard
-            author={{
-              name: "Registrar's Office",
-            }}
-            timestamp="2h ago"
-            content="The official schedule for Spring 2024 final exams is now available. Please check your student portal for details."
-            pinned={true}
-            pinnedLabel="PINNED ANNOUNCEMENT"
-            image={{ uri: "https://via.placeholder.com/300x200?text=Document" }}
-            likes={0}
-            comments={0}
-          />
-
-          {/* Social Post - Sarah Chen */}
-          <PostCard
-            author={{
-              name: "Sarah Chen",
-              avatar: { uri: "https://i.pravatar.cc/150?img=47" },
-              role: "Biochemistry",
-            }}
-            timestamp="15m ago"
-            content="Is anyone studying for Bio 101 at the library tonight? Looking for a study buddy to go over the Krebs cycle! #StudyGroup 🧬"
-            likes={12}
-            comments={4}
-          />
-
-          {/* Club Event - Photography Club */}
-          <PostCard
-            author={{
-              name: "Photography Club",
-              icon: "camera-outline" as keyof typeof Ionicons.glyphMap,
-              backgroundColor: colors.text.primary,
-              iconColor: colors.text.white,
-            }}
-            timestamp="3h ago"
-            content="Golden hour meet-up this Friday! ☀️ Bring your cameras and let's capture the sunset at the quad. We will be experimenting with long exposure shots near the fountain. Beginners are super welcome! 📷"
-            image={{
-              uri: "https://via.placeholder.com/400x250?text=Sunset+Photo",
-            }}
-            likes={48}
-            comments={15}
-            onCommentPress={() => {
-              setSelectedPost({
-                post: {
-                  author: {
-                    name: "Photography Club",
-                    icon: "camera-outline" as keyof typeof Ionicons.glyphMap,
-                    backgroundColor: colors.text.primary,
-                    iconColor: colors.text.white,
-                  },
-                  content:
-                    "Golden hour meet-up this Friday! ☀️ Bring your cameras and let's capture the sunset at the quad. We will be experimenting with long exposure shots near the fountain. Beginners are super welcome! 📷",
-                  hashtags: ["#Photography", "#CampusLife", "#Sunset"],
-                  image: {
-                    uri: "https://via.placeholder.com/400x250?text=Sunset+Photo",
-                  },
-                },
-                comments: [
-                  {
-                    id: "1",
-                    author: {
-                      name: "Sarah Chen",
-                      avatar: { uri: "https://i.pravatar.cc/150?img=47" },
-                    },
-                    timestamp: "2h ago",
-                    content:
-                      "Does anyone have a spare tripod I could borrow? Mine broke last week 😢",
-                    likes: 5,
-                    isLiked: false,
-                    replies: [
-                      {
-                        id: "1-1",
-                        author: {
-                          name: "Mike Ross",
-                          avatar: { uri: "https://i.pravatar.cc/150?img=33" },
-                        },
-                        timestamp: "1h ago",
-                        content:
-                          "I got you! I'll bring my travel tripod. It's not heavy duty but works for mobile/light cams.",
-                        likes: 2,
-                        isLiked: true,
-                      },
-                    ],
-                  },
-                  {
-                    id: "2",
-                    author: {
-                      name: "David Kim",
-                      avatar: null,
-                    },
-                    timestamp: "45m ago",
-                    content:
-                      "Is it okay if I only have my iPhone? I don't have a DSLR yet.",
-                    likes: 0,
-                    isLiked: false,
-                    replies: [
-                      {
-                        id: "2-1",
-                        author: {
-                          name: "Photography Club",
-                          icon: "camera-outline" as keyof typeof Ionicons.glyphMap,
-                          backgroundColor: colors.text.primary,
-                          iconColor: colors.text.white,
-                          isAuthor: true,
-                        },
-                        timestamp: "30m ago",
-                        content:
-                          "Absolutely! Mobile photography is a huge part of what we do. See you there! 📱",
-                        likes: 3,
-                        isLiked: false,
-                      },
-                    ],
-                  },
-                ],
-              });
-            }}
-          />
-
-          {/* Poll - Mike Ross */}
-          <PollCard
-            author={{
-              name: "Mike Ross",
-              avatar: { uri: "https://i.pravatar.cc/150?img=33" },
-            }}
-            timestamp="5h ago"
-            question="Best place for lunch on campus? 🍔🥗"
-            options={[
-              { label: "Student Center", percentage: 70 },
-              { label: "Science Cafe", percentage: 20 },
-              { label: "The Green Room", percentage: 10 },
-            ]}
-            totalVotes={142}
-            timeLeft="1 day left"
-          />
-        </ScrollView>
-
-        {/* Floating Action Button */}
-        <View style={styles.fabContainer}>
-          <FloatingActionButton
-            onPress={() => console.log("Create post")}
-            icon="add"
-          />
-        </View>
-
-        {/* Comments Bottom Sheet */}
-        {selectedPost && (
-          <CommentsBottomSheet
-            post={selectedPost.post}
-            comments={selectedPost.comments}
-            totalComments={15}
-            onClose={() => setSelectedPost(null)}
-            onLikeComment={(commentId: string) => {
-              console.log("Like comment:", commentId);
-            }}
-            onReplyComment={(commentId: string, replyText: string) => {
-              console.log("Reply to comment:", commentId, replyText);
-            }}
-            onSendComment={(text: string) => {
-              console.log("Send comment:", text);
-            }}
-          />
-        )}
-      </SafeAreaView>
-    </GestureHandlerRootView>
+      {/* Sau thay thành chatbot */}
+      <View style={styles.fabContainer}>
+        <FloatingActionButton
+          onPress={() => console.log("Create post")}
+          icon="add"
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
+    backgroundColor: colors.background.white,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 12,
+    padding: 16,
     backgroundColor: colors.background.white,
+    borderBottomWidth: 2,
+    borderBottomColor: colors.border.muted,
   },
   headerLeft: {
     flexDirection: "row",
@@ -310,7 +172,7 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: "#10B981",
+    backgroundColor: colors.state.success,
     borderWidth: 2,
     borderColor: colors.background.white,
   },
@@ -325,7 +187,9 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     fontSize: 12,
-    color: colors.text.muted,
+    color: colors.text.secondary,
+    fontWeight: "400",
+    fontStyle: "italic",
   },
   headerRight: {
     flexDirection: "row",
@@ -345,7 +209,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#EF4444",
+    backgroundColor: colors.state.error,
   },
   filtersScroll: {
     maxHeight: 50,
@@ -359,9 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   feedContent: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 100,
+    // padding: 16,
   },
   feedHeader: {
     flexDirection: "row",
@@ -372,9 +234,13 @@ const styles = StyleSheet.create({
   feedTitle: {
     fontSize: 24,
   },
+  divider: {
+    height: 5,
+    backgroundColor: colors.background.grey,
+  },
   fabContainer: {
     position: "absolute",
-    bottom: 80,
+    bottom: 16,
     right: 20,
   },
 });

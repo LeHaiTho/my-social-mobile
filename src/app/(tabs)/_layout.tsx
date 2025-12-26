@@ -1,18 +1,28 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/ui";
+import colors from "@/constants/colors";
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.icon.teal,
+        tabBarInactiveTintColor: colors.icon.secondary,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "home-sharp" : "home-outline"}
-              color={color}
+          title: "Trang chủ",
+
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              name="home"
+              state={focused ? "active" : "inactive"}
               size={24}
+              color={focused ? colors.icon.teal : colors.icon.secondary}
             />
           ),
         }}
@@ -22,10 +32,11 @@ export default function TabLayout() {
         options={{
           title: "Chat",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "chatbox-sharp" : "chatbox-outline"}
-              color={color}
+            <Icon
+              name="chat"
+              state={focused ? "active" : "inactive"}
               size={24}
+              color={focused ? colors.icon.teal : colors.icon.secondary}
             />
           ),
         }}
@@ -35,10 +46,11 @@ export default function TabLayout() {
         options={{
           title: "Search",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "search-sharp" : "search-outline"}
-              color={color}
+            <Icon
+              name="search"
+              state={focused ? "active" : "inactive"}
               size={24}
+              color={focused ? colors.icon.teal : colors.icon.secondary}
             />
           ),
         }}
@@ -48,10 +60,11 @@ export default function TabLayout() {
         options={{
           title: "Notification",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "notifications-sharp" : "notifications-outline"}
-              color={color}
+            <Icon
+              name="notification"
+              state={focused ? "active" : "inactive"}
               size={24}
+              color={focused ? colors.icon.teal : colors.icon.secondary}
             />
           ),
         }}
@@ -61,12 +74,11 @@ export default function TabLayout() {
         options={{
           title: "About",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={
-                focused ? "information-circle" : "information-circle-outline"
-              }
-              color={color}
+            <Icon
+              name="profile"
+              state={focused ? "active" : "inactive"}
               size={24}
+              color={focused ? colors.icon.teal : colors.icon.secondary}
             />
           ),
         }}

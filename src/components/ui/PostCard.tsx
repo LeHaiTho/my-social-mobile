@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "@/components/ui";
 import Avatar from "./Avatar";
+import Card from "./Card";
 import colors from "@/constants/colors";
 
 interface PostCardProps {
@@ -10,7 +11,7 @@ interface PostCardProps {
     avatar?: { uri: string } | number;
     role?: string;
     online?: boolean;
-    icon?: keyof typeof Ionicons.glyphMap;
+    icon?: keyof typeof import("@expo/vector-icons").Ionicons.glyphMap;
     backgroundColor?: string;
     iconColor?: string;
   };
@@ -44,149 +45,81 @@ const PostCard: React.FC<PostCardProps> = ({
   onSharePress,
 }) => {
   return (
-    <TouchableOpacity
-      style={[styles.card, pinned && styles.cardPinned]}
-      onPress={onPress}
-      activeOpacity={0.95}
-    >
-      {pinned && (
-        <View style={styles.pinnedBar}>
-          <View style={styles.pinnedHeader}>
-            <View style={styles.pinnedLabelContainer}>
-              <Ionicons
-                name="pin"
-                size={12}
-                color={colors.teal.primary}
-                style={styles.pinIcon}
-              />
-              <Text style={styles.pinnedLabel}>
-                {pinnedLabel || "PINNED ANNOUNCEMENT"}
+    <Card onPress={onPress}>
+      <View style={styles.header}>
+        <View style={styles.authorInfo}>
+          <View style={styles.avatarContainer}>
+            <Avatar
+              source={author.avatar}
+              name={author.name}
+              size={40}
+              icon={author.icon}
+              backgroundColor={author.backgroundColor}
+              iconColor={author.iconColor}
+            />
+            {author.online && <View style={styles.onlineIndicator} />}
+          </View>
+          <View style={styles.authorDetails}>
+            <Text style={styles.authorName}>{author.name}</Text>
+            {author.role && (
+              <Text style={styles.authorRole}>
+                {author.role} • {timestamp}
               </Text>
-            </View>
-            <Text style={styles.pinnedTime}>{timestamp}</Text>
+            )}
+            {!author.role && <Text style={styles.authorRole}>{timestamp}</Text>}
           </View>
         </View>
+        <TouchableOpacity
+          onPress={onMenuPress}
+          style={styles.menuButton}
+          activeOpacity={0.7}
+        >
+          <Icon name="more" size={20} color={colors.text.secondary} />
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.postContent}>{content}</Text>
+
+      {image && (
+        <Image source={image} style={styles.postImage} resizeMode="cover" />
       )}
 
-      <View style={styles.content}>
-        {!pinned && (
-          <View style={styles.header}>
-            <View style={styles.authorInfo}>
-              <View style={styles.avatarContainer}>
-                <Avatar
-                  source={author.avatar}
-                  name={author.name}
-                  size={40}
-                  icon={author.icon}
-                  backgroundColor={author.backgroundColor}
-                  iconColor={author.iconColor}
-                />
-                {author.online && (
-                  <View style={styles.onlineIndicator} />
-                )}
-              </View>
-              <View style={styles.authorDetails}>
-                <Text style={styles.authorName}>{author.name}</Text>
-                {author.role && (
-                  <Text style={styles.authorRole}>
-                    {author.role} • {timestamp}
-                  </Text>
-                )}
-                {!author.role && (
-                  <Text style={styles.authorRole}>{timestamp}</Text>
-                )}
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={onMenuPress}
-              style={styles.menuButton}
-              activeOpacity={0.7}
-            >
-              <Ionicons
-                name="ellipsis-horizontal"
-                size={20}
-                color={colors.text.secondary}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {pinned && (
-          <View style={styles.pinnedAuthor}>
-            <View style={styles.pinnedAuthorIcon}>
-              <Text style={styles.pinnedAuthorText}>M</Text>
-            </View>
-            <Text style={styles.pinnedAuthorName}>
-              {pinnedLabel || "Registrar's Office"}
-            </Text>
-          </View>
-        )}
-
-        <Text style={styles.postContent}>{content}</Text>
-
-        {image && (
-          <Image
-            source={image}
-            style={styles.postImage}
-            resizeMode="cover"
+      <View style={styles.actions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={onLikePress}
+          activeOpacity={0.7}
+        >
+          <Icon
+            name="like"
+            state={likes > 0 ? "active" : "inactive"}
+            size={20}
+            color={colors.icon.secondary}
           />
-        )}
-
-        <View style={styles.actions}>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={onLikePress}
-            activeOpacity={0.7}
-          >
-            <Ionicons
-              name="heart"
-              size={20}
-              color={colors.teal.primary}
-            />
-            <Text style={styles.actionCount}>{likes}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={onCommentPress}
-            activeOpacity={0.7}
-          >
-            <Ionicons
-              name="chatbubble-outline"
-              size={20}
-              color={colors.teal.primary}
-            />
-            <Text style={styles.actionCount}>{comments}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.shareButton]}
-            onPress={onSharePress}
-            activeOpacity={0.7}
-          >
-            <Ionicons
-              name="share-social-outline"
-              size={20}
-              color={colors.text.secondary}
-            />
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.actionCount}>{likes}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={onCommentPress}
+          activeOpacity={0.7}
+        >
+          <Icon name="comment" size={20} color={colors.icon.secondary} />
+          <Text style={styles.actionCount}>{comments}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.shareButton]}
+          onPress={onSharePress}
+          activeOpacity={0.7}
+        >
+          <Icon name="share" size={20} color={colors.icon.secondary} />
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.background.white,
-    marginBottom: 12,
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  cardPinned: {
-    borderLeftWidth: 4,
-    borderLeftColor: colors.teal.light,
-  },
   pinnedBar: {
-    backgroundColor: colors.background.light,
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
@@ -198,9 +131,7 @@ const styles = StyleSheet.create({
   pinnedLabelContainer: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  pinIcon: {
-    marginRight: 4,
+    gap: 4,
   },
   pinnedLabel: {
     fontSize: 11,
@@ -211,9 +142,6 @@ const styles = StyleSheet.create({
   pinnedTime: {
     fontSize: 11,
     color: colors.text.muted,
-  },
-  content: {
-    padding: 16,
   },
   header: {
     flexDirection: "row",
@@ -296,8 +224,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: colors.border.light,
   },
   actionButton: {
     flexDirection: "row",
@@ -310,11 +236,10 @@ const styles = StyleSheet.create({
   },
   actionCount: {
     fontSize: 14,
-    color: colors.teal.primary,
+    color: colors.text.primary,
     marginLeft: 6,
     fontWeight: "500",
   },
 });
 
 export default PostCard;
-

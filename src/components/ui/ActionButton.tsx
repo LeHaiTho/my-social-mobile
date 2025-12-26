@@ -2,9 +2,10 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/constants/colors";
+import IconComponent from "./IconComponent";
 
 interface ActionButtonProps {
-  icon: keyof typeof import("@expo/vector-icons").Ionicons.glyphMap;
+  icon: string;
   label: string;
   iconColor?: string;
   onPress?: () => void;
@@ -22,13 +23,9 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <Ionicons name={icon} size={24} color={iconColor} />
+      <IconComponent family="Ionicons" name={icon} size={24} />
       <Text style={styles.label}>{label}</Text>
-      <Ionicons
-        name="chevron-forward"
-        size={20}
-        color={colors.icon.secondary}
-      />
+      <IconComponent family="Ionicons" name="chevron-forward" size={20} />
     </TouchableOpacity>
   );
 };
@@ -52,4 +49,3 @@ const styles = StyleSheet.create({
 });
 
 export default ActionButton;
-

@@ -8,6 +8,7 @@ export { default as FilterTab } from "./FilterTab";
 export { default as Avatar } from "./Avatar";
 export { default as NotificationItem } from "./NotificationItem";
 export { default as SectionHeader } from "./SectionHeader";
+export { default as Card } from "./Card";
 export { default as PostCard } from "./PostCard";
 export { default as PollCard } from "./PollCard";
 export { default as ToggleSwitch } from "./ToggleSwitch";
@@ -29,6 +30,10 @@ export { default as StatCard } from "./StatCard";
 export { default as CourseCard } from "./CourseCard";
 export { default as ActionButton } from "./ActionButton";
 export { default as DetailRow } from "./DetailRow";
+export { default as IconComponent } from "./IconComponent";
+export type { IconFamily, IconComponentProps } from "./IconComponent";
+export { default as Icon } from "./Icon";
+export type { IconSet } from "./Icon";
 
 export type { ButtonVariant, ButtonSize } from "./Button";
 export type { TitleVariant, TitleWeight } from "./Title";

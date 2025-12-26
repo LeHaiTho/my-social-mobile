@@ -14,6 +14,7 @@ export const colors = {
     white: "#FFFFFF", // White - input fields, cards
     light: "#FAFAFA", // Very light grey
     grey: "#E5E7EB", // Light grey for dividers
+    dark: "#1F2937", // Dark grey for dividers
   },
 
   // Text Colors
