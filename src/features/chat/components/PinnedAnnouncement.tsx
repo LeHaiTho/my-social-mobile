@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Button from "./Button";
+import Button from "@/components/ui/Button";
 import colors from "@/constants/colors";
 
 interface PinnedAnnouncementProps {
@@ -85,5 +85,7 @@ const styles = StyleSheet.create({
 });
 
 export default PinnedAnnouncement;
+
+
 
 

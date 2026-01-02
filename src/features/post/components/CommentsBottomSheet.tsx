@@ -15,7 +15,8 @@ import {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { Ionicons } from "@expo/vector-icons";
-import { Avatar, CommentItem } from "@/components/ui";
+import { Avatar } from "@/components/ui";
+import CommentItem from "./CommentItem";
 import colors from "@/constants/colors";
 
 interface Comment {
@@ -474,4 +475,7 @@ const styles = StyleSheet.create({
 });
 
 export default CommentsBottomSheet;
+
+
+
 

@@ -251,3 +251,8 @@ const styles = StyleSheet.create({
 export default TrendingCard;
 
 
+
+
+
+
+

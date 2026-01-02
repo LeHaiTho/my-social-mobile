@@ -7,137 +7,214 @@ import {
   Text,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Avatar, PostCard, FloatingActionButton, Icon } from "@/components/ui";
-import colors from "@/constants/colors";
-import { icons } from "@/constants/icon";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  Avatar,
+  SectionHeader,
+  AnnouncementCard,
+  DeadlineCard,
+  EventCard,
+  ConfessionCard,
+  FilterTab,
+  FilterTabList,
+  FilterItem,
+} from "@/components/ui";
+import { PostCard } from "@/features/post";
+import colors from "@/constants/colors";
 
-export default function HomeScreen() {
-  const [selectedFilter, setSelectedFilter] = useState("all");
-  const [feedSort, setFeedSort] = useState<0 | 1>(0);
-  const [selectedPost, setSelectedPost] = useState<{
-    post: any;
-    comments: any[];
-  } | null>(null);
-
-  const filters = [
-    { id: "all", label: "All" },
-    { id: "official", label: "Official" },
-    { id: "clubs", label: "Clubs" },
-    { id: "events", label: "Events" },
-  ];
-
+export default function CampusFeedScreen() {
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       {/* Header */}
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <View style={styles.avatarContainer}>
-            <Avatar
-              source={{ uri: "https://i.pravatar.cc/150?img=12" }}
-              name="Alex"
-              size={48}
-            />
-            <View style={styles.onlineIndicator} />
-          </View>
-          <View style={styles.greetingContainer}>
-            <Text style={styles.greeting}>Lê Hải Thọ</Text>
-            <Text style={styles.userInfo}>Khoa Công nghệ thông tin</Text>
-          </View>
-        </View>
-        <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.iconButton} activeOpacity={0.7}>
-            <Icon
-              name={icons.search.inactive.name}
-              set={icons.search.inactive.set}
+        <Text style={styles.headerTitle}>Campus Feed</Text>
+        <View style={styles.headerActions}>
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => console.log("Search")}
+            activeOpacity={0.7}
+          >
+            <Ionicons
+              name="search-outline"
               size={24}
-              color={colors.icon.primary}
+              color={colors.text.primary}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton} activeOpacity={0.7}>
-            <View style={styles.badgeContainer}>
-              <Icon
-                name={icons.notification.inactive.name}
-                set={icons.notification.inactive.set}
-                size={24}
-                color={colors.icon.primary}
-              />
-              <View style={styles.notificationBadge} />
-            </View>
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => console.log("Profile")}
+            activeOpacity={0.7}
+          >
+            <Avatar
+              name="User"
+              size={32}
+              backgroundColor={colors.teal.light}
+              iconColor={colors.teal.primary}
+            />
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* Feed Content */}
+      {/* Content */}
       <ScrollView
-        style={styles.feedScroll}
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.feedContent}
       >
-        {/* Pinned Announcement */}
-        <PostCard
-          author={{
-            name: "Registrar's Office",
-          }}
-          timestamp="2h ago"
-          content="The official schedule for Spring 2024 final exams is now available. Please check your student portal for details."
-          // pinned={true}
-          // pinnedLabel="PINNED ANNOUNCEMENT"
-          image={{
-            uri: "https://khoinguonsangtao.vn/wp-content/uploads/2021/08/tai-hinh-anh-dep-ve-thien-nhien.jpg",
-          }}
-          likes={0}
-          comments={0}
-        />
-        <View style={styles.divider} />
+        {/* Official Announcements */}
+        <View style={styles.section}>
+          <SectionHeader
+            title="Official Announcements"
+            icon="megaphone-outline"
+            iconColor="#EF4444"
+            viewAllLabel="View All"
+            onViewAllPress={() => console.log("View All Announcements")}
+            style={styles.sectionHeader}
+          />
+          <AnnouncementCard
+            tag="ANNOUNCEMENT"
+            author="Admin"
+            timestamp="2h ago"
+            title="Trường Đại học Thủ Dầu Một phát hành Bộ lịch năm 2026"
+            description="Bộ lịch Tết 2026 của Trường Đại học Thủ Dầu Một được xây dựng với chủ đề “Chiến lược phát triển đến năm 2035, tầm nhìn đến năm 2050”, phản ánh định hướng phát triển dài hạn của Nhà trường trong bối cảnh chính thức bước vào không gian phát triển mở rộng của Thành phố Hồ Chí Minh từ ngày 01/7/2025"
+            backgroundImage={{
+              uri: "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/8/23/1084256/295497942_2922294937.jpg",
+            }}
+            onPress={() => console.log("View Announcement")}
+            onBookmarkPress={() => console.log("Bookmark")}
+          />
+        </View>
 
-        {/* Club Event - Photography Club */}
-        <PostCard
-          author={{
-            name: "Photography Club",
-            icon: "camera-outline" as keyof typeof Ionicons.glyphMap,
-            backgroundColor: colors.text.primary,
-            iconColor: colors.text.white,
-          }}
-          timestamp="3h ago"
-          content="Golden hour meet-up this Friday! ☀️ Bring your cameras and let's capture the sunset at the quad. We will be experimenting with long exposure shots near the fountain. Beginners are super welcome! 📷"
-          image={{
-            uri: "https://khoinguonsangtao.vn/wp-content/uploads/2021/08/tai-hinh-anh-dep-ve-thien-nhien.jpg",
-          }}
-          likes={48}
-          comments={15}
-          onCommentPress={() => {
-            console.log("comment press");
-          }}
-        />
-        <View style={styles.divider} />
-        <PostCard
-          author={{
-            name: "Photography Club",
-            icon: "camera-outline" as keyof typeof Ionicons.glyphMap,
-            backgroundColor: colors.text.primary,
-            iconColor: colors.text.white,
-          }}
-          timestamp="3h ago"
-          content="Golden hour meet-up this Friday! ☀️ Bring your cameras and let's capture the sunset at the quad. We will be experimenting with long exposure shots near the fountain. Beginners are super welcome! 📷"
-          image={{
-            uri: "https://khoinguonsangtao.vn/wp-content/uploads/2021/08/tai-hinh-anh-dep-ve-thien-nhien.jpg",
-          }}
-          likes={48}
-          comments={15}
-          onCommentPress={() => {
-            console.log("comment press");
-          }}
-        />
+        {/* Academic Deadlines */}
+        <View style={styles.section}>
+          <SectionHeader
+            title="Academic Deadlines"
+            icon="calendar-outline"
+            style={styles.sectionHeader}
+          />
+          <DeadlineCard
+            tag="DEADLINE"
+            author="Registrar"
+            timestamp="Today"
+            title="Fall Semester Course Withdrawal Deadline"
+            description="Last day to withdraw with a 'W' grade."
+            month="FEB"
+            day="14"
+            onPress={() => console.log("View Deadline")}
+            onBookmarkPress={() => console.log("Bookmark")}
+            onViewGuidelinesPress={() => console.log("View Guidelines")}
+          />
+        </View>
+
+        {/* Upcoming Events */}
+        <View style={styles.section}>
+          <SectionHeader
+            title="Upcoming Events"
+            icon="ticket-outline"
+            style={styles.sectionHeader}
+          />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.eventsScroll}
+          >
+            <EventCard
+              tag="EVENT"
+              author="Career Services"
+              title="Annual Tech Career Fair 2024"
+              time="Tomorrow, 10 AM"
+              backgroundImage={{
+                uri: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800",
+              }}
+              onPress={() => console.log("View Event 1")}
+            />
+            <EventCard
+              tag="GAME DAY"
+              author="Athletics Department"
+              title="Varsity Basketball Championship"
+              time="This Saturday, 7 PM"
+              onPress={() => console.log("View Event 2")}
+            />
+          </ScrollView>
+        </View>
+
+        {/* Featured Posts */}
+        <View style={styles.section}>
+          <SectionHeader
+            title="Featured Posts"
+            icon="star"
+            iconColor="#FBBF24"
+            style={styles.sectionHeader}
+          />
+          <View style={styles.postCardWrapper}>
+            <View style={styles.postTag}>
+              <Text style={styles.postTagText}>DISCUSSION</Text>
+            </View>
+            <PostCard
+              author={{
+                name: "John Doe",
+                role: "Student Union",
+                icon: "person-outline",
+                backgroundColor: "#9333EA",
+                iconColor: colors.text.white,
+              }}
+              timestamp="5h ago"
+              content="Proposal for extended library hours during finals. We are gathering signatures to keep the main library open 24/7 during the upcoming finals week. Check the details attached."
+              onPress={() => console.log("View Post")}
+              onLikePress={() => console.log("Like")}
+              onCommentPress={() => console.log("Comment")}
+              onSharePress={() => console.log("Share")}
+            />
+          </View>
+          <View style={styles.postFooter}>
+            <View style={styles.warningContainer}>
+              <Ionicons
+                name="warning-outline"
+                size={16}
+                color={colors.state.warning}
+              />
+              <Text style={styles.warningText}>Not an official channel</Text>
+            </View>
+            <View style={styles.postActions}>
+              <TouchableOpacity
+                onPress={() => console.log("View Detail")}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.viewDetailText}>View Detail</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.bookmarkButton}
+                onPress={() => console.log("Bookmark")}
+                activeOpacity={0.7}
+              >
+                <Ionicons
+                  name="bookmark-outline"
+                  size={20}
+                  color={colors.text.secondary}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* Selected Confessions */}
+        <View style={styles.section}>
+          <SectionHeader
+            title="Selected Confessions"
+            icon="chatbubble-ellipses-outline"
+            iconColor="#FBBF24"
+            style={styles.sectionHeader}
+          />
+          <ConfessionCard
+            tag="CONFESSION"
+            author="Anonymous"
+            timestamp="30m ago"
+            content={
+              "The coffee in the library vending machine is actually surprisingly good today. Maybe I'm just sleep deprived."
+            }
+            onPress={() => console.log("View Confession")}
+            onSavePress={() => console.log("Save")}
+          />
+        </View>
       </ScrollView>
-
-      {/* Sau thay thành chatbot */}
-      <View style={styles.fabContainer}>
-        <FloatingActionButton
-          onPress={() => console.log("Create post")}
-          icon="add"
-        />
-      </View>
     </SafeAreaView>
   );
 }
@@ -145,102 +222,93 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.primary,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 12,
     backgroundColor: colors.background.white,
-    borderBottomWidth: 2,
-    borderBottomColor: colors.border.muted,
   },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  avatarContainer: {
-    position: "relative",
-    marginRight: 12,
-  },
-  onlineIndicator: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: colors.state.success,
-    borderWidth: 2,
-    borderColor: colors.background.white,
-  },
-  greetingContainer: {
-    flex: 1,
-  },
-  greeting: {
-    fontSize: 18,
+  headerTitle: {
+    fontSize: 28,
     fontWeight: "700",
     color: colors.text.primary,
-    marginBottom: 2,
   },
-  userInfo: {
-    fontSize: 12,
-    color: colors.text.secondary,
-    fontWeight: "400",
-    fontStyle: "italic",
-  },
-  headerRight: {
+  headerActions: {
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
   },
-  iconButton: {
+  headerButton: {
     padding: 4,
   },
-  badgeContainer: {
-    position: "relative",
-  },
-  notificationBadge: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.state.error,
-  },
-  filtersScroll: {
-    maxHeight: 50,
-    backgroundColor: colors.background.white,
-  },
-  filtersContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-  },
-  feedScroll: {
+  scrollView: {
     flex: 1,
   },
-  feedContent: {
-    // padding: 16,
+  section: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    backgroundColor: colors.background.white,
+    marginBottom: 8,
   },
-  feedHeader: {
+  sectionHeader: {
+    marginBottom: 16,
+  },
+  eventsScroll: {
+    paddingRight: 20,
+  },
+  postCardWrapper: {
+    position: "relative",
+    marginBottom: 8,
+  },
+  postTag: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    zIndex: 10,
+    backgroundColor: "#9333EA",
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+  },
+  postTagText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: colors.text.white,
+    textTransform: "uppercase",
+  },
+  postFooter: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    backgroundColor: colors.background.white,
   },
-  feedTitle: {
-    fontSize: 24,
+  warningContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
-  divider: {
-    height: 5,
-    backgroundColor: colors.background.grey,
+  warningText: {
+    fontSize: 12,
+    color: colors.state.warning,
+    marginLeft: 6,
   },
-  fabContainer: {
-    position: "absolute",
-    bottom: 16,
-    right: 20,
+  postActions: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  viewDetailText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: colors.teal.primary,
+    marginRight: 12,
+  },
+  bookmarkButton: {
+    padding: 4,
   },
 });

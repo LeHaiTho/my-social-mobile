@@ -1,10 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Avatar from "./Avatar";
+import Avatar from "@/components/ui/Avatar";
 import colors from "@/constants/colors";
-
-export type ChatType = "direct" | "group" | "class";
+import type { ChatType } from "../types";
 
 interface ChatItemProps {
   type: ChatType;
@@ -244,5 +243,4 @@ const styles = StyleSheet.create({
 });
 
 export default ChatItem;
-
 

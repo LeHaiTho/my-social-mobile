@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Avatar from "./Avatar";
+import Avatar from "@/components/ui/Avatar";
 import colors from "@/constants/colors";
 
 interface MessageBubbleProps {
@@ -187,4 +187,7 @@ const styles = StyleSheet.create({
 });
 
 export default MessageBubble;
+
+
+
 

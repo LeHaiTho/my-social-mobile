@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Icon } from "@/components/ui";
-import Avatar from "./Avatar";
-import Card from "./Card";
+import Avatar from "@/components/ui/Avatar";
+import Card from "@/components/ui/Card";
 import colors from "@/constants/colors";
 
 interface PostCardProps {
@@ -243,3 +243,7 @@ const styles = StyleSheet.create({
 });
 
 export default PostCard;
+
+
+
+

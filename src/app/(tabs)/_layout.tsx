@@ -28,6 +28,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="community"
+        options={{
+          title: "Community",
+          tabBarIcon: ({ color, focused }) => (
+            <Icon
+              name="courses"
+              state={focused ? "active" : "inactive"}
+              size={24}
+              color={focused ? colors.icon.teal : colors.icon.secondary}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="chat"
         options={{
           title: "Chat",
