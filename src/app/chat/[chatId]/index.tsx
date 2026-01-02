@@ -11,13 +11,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Avatar } from "@/components/ui";
 import {
-  Avatar,
   MessageBubble,
   MessageInput,
   DateSeparator,
   PinnedAnnouncement,
-} from "@/components/ui";
+} from "@/features/chat";
 import colors from "@/constants/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

@@ -8,8 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/constants/colors";
-
-export type SocialProvider = "google" | "ios" | "university";
+import type { SocialProvider } from "../types";
 
 interface SocialButtonProps {
   provider: SocialProvider;
@@ -87,5 +86,7 @@ const styles = StyleSheet.create({
 });
 
 export default SocialButton;
+
+
 
 

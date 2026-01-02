@@ -8,9 +8,12 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { FilterTab, NotificationItem, SectionHeader } from "@/components/ui";
+import { FilterTabList, SectionHeader, type FilterItem } from "@/components/ui";
+import {
+  NotificationItem,
+  type NotificationType,
+} from "@/features/notification";
 import colors from "@/constants/colors";
-import type { NotificationType } from "@/components/ui";
 
 type FilterType = "all" | "social" | "academic" | "mentions";
 
@@ -21,15 +24,21 @@ export default function NotificationScreen() {
     console.log("Mark all read");
   };
 
-  const filters: Array<{
-    id: FilterType;
-    label: string;
-    icon?: keyof typeof Ionicons.glyphMap;
-  }> = [
-    { id: "all", label: "All", icon: "checkmark" },
-    { id: "social", label: "Social", icon: "people-outline" },
-    { id: "academic", label: "Academic", icon: "school-outline" },
-    { id: "mentions", label: "@", icon: "at-outline" },
+  const filters: FilterItem[] = [
+    { id: "all", label: "All", icon: "checkmark", iconPosition: "left" },
+    {
+      id: "social",
+      label: "Social",
+      icon: "people-outline",
+      iconPosition: "left",
+    },
+    {
+      id: "academic",
+      label: "Academic",
+      icon: "school-outline",
+      iconPosition: "left",
+    },
+    { id: "mentions", label: "@", icon: "at-outline", iconPosition: "left" },
   ];
 
   const newNotifications = [
@@ -145,23 +154,11 @@ export default function NotificationScreen() {
       </View>
 
       {/* Filter Tabs */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.filtersContainer}
-        style={styles.filtersScroll}
-      >
-        {filters.map((filter) => (
-          <FilterTab
-            key={filter.id}
-            label={filter.label}
-            selected={selectedFilter === filter.id}
-            onPress={() => setSelectedFilter(filter.id)}
-            icon={filter.icon}
-            iconPosition={filter.id === "all" ? "left" : "left"}
-          />
-        ))}
-      </ScrollView>
+      <FilterTabList
+        filters={filters}
+        selectedFilter={selectedFilter}
+        onFilterChange={(filterId) => setSelectedFilter(filterId as FilterType)}
+      />
 
       {/* Notifications List */}
       <ScrollView
@@ -250,13 +247,6 @@ const styles = StyleSheet.create({
   },
   markAllReadIcon: {
     marginLeft: 2,
-  },
-  filtersScroll: {
-    maxHeight: 50,
-  },
-  filtersContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 8,
   },
   notificationsScroll: {
     flex: 1,

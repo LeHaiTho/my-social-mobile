@@ -8,9 +8,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { SearchBar, Chip, StoryItem, ChatItem, Avatar } from "@/components/ui";
+import { SearchBar, Chip, StoryItem, Avatar } from "@/components/ui";
+import { ChatItem, type ChatType } from "@/features/chat";
 import colors from "@/constants/colors";
-import type { ChatType } from "@/components/ui";
 import { router } from "expo-router";
 
 export default function MessagesScreen() {

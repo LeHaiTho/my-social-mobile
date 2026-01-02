@@ -16,10 +16,9 @@ import {
   Title,
   TextInput,
   Checkbox,
-  RoleButton,
 } from "@/components/ui";
+import { RoleButton, type RoleType } from "@/features/auth";
 import colors from "@/constants/colors";
-import type { RoleType } from "@/components/ui";
 
 export default function RegisterScreen() {
   const [fullName, setFullName] = useState("");

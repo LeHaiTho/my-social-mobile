@@ -14,8 +14,8 @@ import {
   Title,
   TextInput,
   Checkbox,
-  SocialButton,
 } from "@/components/ui";
+import { SocialButton } from "@/features/auth";
 import colors from "@/constants/colors";
 
 export default function LoginScreen() {

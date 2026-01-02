@@ -2,8 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "@/constants/colors";
-
-export type RoleType = "student" | "lecturer" | "admin";
+import type { RoleType } from "../types";
 
 interface RoleButtonProps {
   role: RoleType;
@@ -105,4 +104,7 @@ const styles = StyleSheet.create({
 });
 
 export default RoleButton;
+
+
+
 

@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import Avatar from "./Avatar";
+import Avatar from "@/components/ui/Avatar";
 import colors from "@/constants/colors";
-
-export type NotificationType = "social" | "academic" | "system" | "event";
+import type { NotificationType } from "../types";
 
 interface NotificationItemProps {
   avatar?: {
@@ -164,4 +163,5 @@ const styles = StyleSheet.create({
 });
 
 export default NotificationItem;
+
 
